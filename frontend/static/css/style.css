@@ -1,0 +1,39 @@
+/* frontend/static/css/style.css */
+.game-board {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+}
+
+.board-row {
+    display: flex;
+    gap: 5px;
+}
+
+.cell {
+    width: 100px;
+    height: 100px;
+    font-size: 2em;
+    font-weight: bold;
+    border: 2px solid #333;
+    background: #fff;
+    cursor: pointer;
+}
+
+.cell:hover {
+    background: #f0f0f0;
+}
+
+.cell[disabled] {
+    cursor: not-allowed;
+    opacity: 0.8;
+}
+
+.cell.x {
+    color: #007bff;
+}
+
+.cell.o {
+    color: #dc3545;
+}

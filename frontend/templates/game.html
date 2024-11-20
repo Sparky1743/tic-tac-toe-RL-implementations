@@ -1,0 +1,43 @@
+<!-- frontend/templates/game.html -->
+{% extends "base.html" %}
+{% block content %}
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-md-8 offset-md-2">
+            <div class="game-status alert alert-info mb-3" role="alert">
+                Welcome to Tic-Tac-Toe! You are 'X' and the AI is 'O'
+            </div>
+            
+            <div class="game-board">
+                <div class="board-row">
+                    <button class="cell" data-pos="0,0">-</button>
+                    <button class="cell" data-pos="0,1">-</button>
+                    <button class="cell" data-pos="0,2">-</button>
+                </div>
+                <div class="board-row">
+                    <button class="cell" data-pos="1,0">-</button>
+                    <button class="cell" data-pos="1,1">-</button>
+                    <button class="cell" data-pos="1,2">-</button>
+                </div>
+                <div class="board-row">
+                    <button class="cell" data-pos="2,0">-</button>
+                    <button class="cell" data-pos="2,1">-</button>
+                    <button class="cell" data-pos="2,2">-</button>
+                </div>
+            </div>
+
+            <div class="controls mt-4">
+                <button id="new-game" class="btn btn-primary">New Game</button>
+                <select id="agent-select" class="form-select d-inline-block w-auto ms-2">
+                    <option value="q">Q-Learning Agent</option>
+                    <option value="s">SARSA Agent</option>
+                </select>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/game.js') }}"></script>
+{% endblock %}

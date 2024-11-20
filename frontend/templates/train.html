@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-md-8 offset-md-2">
+            <div class="card">
+                <div class="card-header">
+                    <h4>Train Agent</h4>
+                </div>
+                <div class="card-body">
+                    <form id="train-form">
+                        <div class="mb-3">
+                            <label class="form-label">Agent Type</label>
+                            <select class="form-select" id="agent-type">
+                                <option value="q">Q-Learning</option>
+                                <option value="s">SARSA</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Training Method</label>
+                            <select class="form-select" id="train-method">
+                                <option value="manual">Manual Training</option>
+                                <option value="teacher">Teacher Training</option>
+                            </select>
+                        </div>
+                        <div class="mb-3" id="episodes-group">
+                            <label class="form-label">Training Episodes</label>
+                            <input type="number" class="form-control" id="episodes" value="5000">
+                        </div>
+                        <div class="mb-3">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="load-existing">
+                                <label class="form-check-label">Load Existing Agent</label>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Start Training</button>
+                    </form>
+                    <div class="mt-3">
+                        <div class="progress">
+                            <div class="progress-bar" role="progressbar" style="width: 0%"></div>
+                        </div>
+                        <div id="training-status" class="mt-2"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/train.js') }}"></script>
+{% endblock %}
