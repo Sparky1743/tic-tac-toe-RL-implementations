@@ -3,7 +3,7 @@ import os
 import pickle
 import sys
 
-from tictactoe.agent import Qlearner, SARSAlearner
+from tictactoe.agent import Qlearner, SARSAlearner, ValueIterationAgent, PolicyIterationAgent
 from tictactoe.teacher import Teacher
 from tictactoe.game import Game
 
@@ -71,29 +71,57 @@ class GameLearning(object):
 
 
 if __name__ == "__main__":
+    # Parse command line arguments
     parser = argparse.ArgumentParser(description="Play Tic-Tac-Toe.")
-    parser.add_argument('-a', "--agent_type", type=str, default="q",
-                        choices=['q', 's'],
-                        help="Specify the computer agent learning algorithm. "
-                             "AGENT_TYPE='q' for Q-learning and AGENT_TYPE='s' "
-                             "for Sarsa-learning.")
+    parser.add_argument("-a", "--agent", type=str, choices=['q', 's', 'v', 'p'], 
+                   default='q', help="Agent type (q=Q-Learning, s=SARSA, v=Value Iteration, p=Policy Iteration)")
     parser.add_argument("-p", "--path", type=str, required=False,
-                        help="Specify the path for the agent pickle file. "
-                             "Defaults to q_agent.pkl for AGENT_TYPE='q' and "
-                             "sarsa_agent.pkl for AGENT_TYPE='s'.")
+                        help="Specify the path for the agent pickle file.")
     parser.add_argument("-l", "--load", action="store_true",
                         help="whether to load trained agent")
     parser.add_argument("-t", "--teacher_episodes", default=None, type=int,
-                        help="employ teacher agent who knows the optimal "
-                             "strategy and will play for TEACHER_EPISODES games")
+                        help="employ teacher agent who knows the optimal strategy")
+
     args = parser.parse_args()
 
-    if args.path is None:
-        args.path = 'q_agent.pkl' if args.agent_type == 'q' else 'sarsa_agent.pkl'
-
-    gl = GameLearning(args)
-
-    if args.teacher_episodes is not None:
-        gl.beginTeaching(args.teacher_episodes)
+    # Handle Value Iteration agent differently since it doesn't need training
+    if args.agent in ['v', 'p']:
+        # Create appropriate agent
+        if args.agent == 'v':
+            agent = ValueIterationAgent(gamma=0.9)
+            print("Computing optimal policy using Value Iteration...")
+            agent.compute_value_iteration()
+        else:
+            agent = PolicyIterationAgent(gamma=0.9)
+            print("Computing optimal policy using Policy Iteration...")
+            agent.compute_policy_iteration()
+            
+        print("Done! Starting game...")
+        print("\nWelcome to Tic-Tac-Toe. You are 'X' and the computer is 'O'.")
+        
+        while True:
+            game = Game(agent)
+            game.start()
+            
+            while True:
+                play = input("Do you want to play again? [y/n]: ")
+                if play.lower() in ['y', 'yes']:
+                    break
+                elif play.lower() in ['n', 'no']:
+                    print("OK. Quitting.")
+                    sys.exit(0)
+                else:
+                    print("Invalid input. Please choose 'y' or 'n'.")
     else:
-        gl.beginPlaying()
+        # Original code for Q-learning and SARSA agents
+        if args.path is None:
+            args.path = 'q_agent.pkl' if args.agent == 'q' else 'sarsa_agent.pkl'
+
+        gl = GameLearning(args)
+
+        if args.teacher_episodes is not None:
+            gl.beginTeaching(args.teacher_episodes)
+        else:
+            gl.beginPlaying()   
+
+ 
