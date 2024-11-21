@@ -88,4 +88,20 @@ document.addEventListener('DOMContentLoaded', () => {
             agent: agentSelect.value
         });
     });
+
+    // Agent selection change
+    agentSelect.addEventListener('change', () => {
+        cells.forEach(cell => {
+            cell.textContent = '-';
+            cell.className = 'cell';
+            cell.disabled = false;
+        });
+        gameActive = true;
+        gameStatus.textContent = "Your turn! Select a cell to place 'X'";
+        gameStatus.className = 'alert alert-info';
+        
+        socket.emit('new_game', {
+            agent: agentSelect.value
+        });
+    });
 });

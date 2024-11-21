@@ -1,39 +1,167 @@
 /* frontend/static/css/style.css */
+/* Global styles */
+body {
+    background-color: #f8f9fa;
+    font-family: 'Poppins', sans-serif;
+}
+
+/* Navbar styling */
+.navbar {
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.navbar-brand {
+    font-weight: 600;
+    font-size: 1.4rem;
+}
+
+.nav-link {
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+
+.nav-link:hover {
+    color: #007bff !important;
+}
+
+/* Game board styling */
 .game-board {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 5px;
+    gap: 8px;
+    margin: 2rem auto;
+    perspective: 1000px;
 }
 
 .board-row {
     display: flex;
-    gap: 5px;
+    gap: 8px;
 }
 
 .cell {
     width: 100px;
     height: 100px;
-    font-size: 2em;
+    font-size: 2.5em;
     font-weight: bold;
-    border: 2px solid #333;
-    background: #fff;
+    border: none;
+    border-radius: 12px;
+    background: white;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
     cursor: pointer;
+    transition: all 0.3s ease;
 }
 
 .cell:hover {
-    background: #f0f0f0;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+    background: #f8f9fa;
 }
 
 .cell[disabled] {
     cursor: not-allowed;
-    opacity: 0.8;
+    opacity: 1;
 }
 
 .cell.x {
-    color: #007bff;
+    color: #2563eb;
 }
 
 .cell.o {
-    color: #dc3545;
+    color: #dc2626;
+}
+
+/* Card styling */
+.card {
+    border: none;
+    border-radius: 15px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    transition: transform 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+}
+
+.card-header {
+    background-color: #fff;
+    border-bottom: 1px solid #eef2f7;
+    border-radius: 15px 15px 0 0 !important;
+    padding: 1.5rem;
+}
+
+.card-body {
+    padding: 1.5rem;
+}
+
+/* Controls styling */
+.controls {
+    margin-top: 2rem;
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+}
+
+.btn-primary {
+    padding: 0.5rem 1.5rem;
+    font-weight: 500;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0,123,255,0.3);
+}
+
+/* Form elements */
+.form-select, .form-control {
+    border-radius: 8px;
+    border: 1px solid #e2e8f0;
+    padding: 0.75rem;
+    transition: all 0.3s ease;
+}
+
+.form-select:focus, .form-control:focus {
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 3px rgba(59,130,246,0.25);
+}
+
+/* Progress bar */
+.progress {
+    height: 0.8rem;
+    border-radius: 1rem;
+    background-color: #e2e8f0;
+}
+
+.progress-bar {
+    background-color: #3b82f6;
+    transition: width 0.3s ease;
+}
+
+/* Alerts */
+.alert {
+    border: none;
+    border-radius: 12px;
+    padding: 1rem 1.5rem;
+    font-weight: 500;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+/* Game status alerts */
+.game-status {
+    text-align: center;
+    font-size: 1.2rem;
+    margin-bottom: 2rem;
+}
+
+/* Rewards plot */
+#rewards-plot {
+    margin-top: 1.5rem;
+    text-align: center;
+}
+
+#rewards-plot img {
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
 }
