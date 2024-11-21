@@ -10,7 +10,7 @@ from tictactoe.game import Game
 
 class GameLearning(object):
     def __init__(self, args, alpha=0.5, gamma=0.9, epsilon=0.1):
-        self.agent_type = args.agent
+        self.agent_type = args.agent_type
         self.path = args.path
         self.load = args.load
         self.teacher_episodes = args.teacher_episodes

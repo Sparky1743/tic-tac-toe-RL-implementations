@@ -10,10 +10,10 @@ import io
 import base64
 import logging
 
-# Add both project root and q_learning_and_sarsa to Python path
+# Add both project root and backend to Python path
 PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.append(PROJECT_ROOT)
-sys.path.append(os.path.join(PROJECT_ROOT, 'q_learning_and_sarsa'))
+sys.path.append(os.path.join(PROJECT_ROOT, 'backend'))
 
 from tictactoe.game import Game, getStateKey
 from tictactoe.agent import Qlearner, SARSAlearner, ValueIterationAgent, PolicyIterationAgent
@@ -32,7 +32,7 @@ socketio = SocketIO(app, cors_allowed_origins="*")  # Allow CORS for WebSocket
 # Load agents
 def load_agent(agent_type):
     """Load or create a new agent"""
-    path = os.path.join(PROJECT_ROOT, 'q_learning_and_sarsa', 
+    path = os.path.join(PROJECT_ROOT, 'backend', 
                        'q_agent.pkl' if agent_type == 'q' else 'sarsa_agent.pkl' if agent_type == 's' else 'v_agent.pkl' if agent_type == 'v' else 'p_agent.pkl')
     try:
         if os.path.isfile(path):
@@ -153,8 +153,8 @@ def handle_training(data):
     try:
         logger.debug(f"Starting training with parameters: {data}")
         agent_type = data['agent_type']
-        method = data['method']
-        episodes = data.get('episodes', 5000)
+        method = data.get('method', None)
+        episodes = data.get('episodes', None)
         load_existing = data.get('load_existing', False)
         
         # Prepare arguments for GameLearning
@@ -167,7 +167,7 @@ def handle_training(data):
         
         args = Args(
             agent_type=agent_type,
-            path=os.path.join(PROJECT_ROOT, 'q_learning_and_sarsa', f'{"sarsa" if agent_type=="s" else agent_type }_agent.pkl'),
+            path=os.path.join(PROJECT_ROOT, 'backend', f'{"sarsa" if agent_type=="s" else agent_type }_agent.pkl'),
             load=load_existing,
             teacher_episodes=episodes if method == 'teacher' else None
         )
@@ -175,10 +175,10 @@ def handle_training(data):
         # Initialize GameLearning
         game_learning = GameLearning(args)
         
-        if method == 'teacher':
+        if method == 'teacher' and (agent_type == 'q' or agent_type == 's'):
             game_learning.beginTeaching(episodes)
-        else:
-            game_learning.beginPlaying()
+        # else:
+        #     game_learning.beginPlaying()
         
         emit('training_complete')
         

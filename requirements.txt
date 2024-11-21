@@ -1,0 +1,6 @@
+Flask==2.1.1
+Flask-SocketIO==5.2.0
+numpy==1.21.2
+matplotlib==3.4.3
+eventlet==0.31.0
+python-socketio==5.5.0
