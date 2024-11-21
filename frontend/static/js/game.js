@@ -51,16 +51,22 @@ document.addEventListener('DOMContentLoaded', () => {
     // Handle agent's move
     socket.on('agent_move', (data) => {
         try {
-            console.log('Agent move received:', data);
-            const cell = document.querySelector(`[data-pos="${data.row},${data.col}"]`);
-            cell.textContent = 'O';
-            cell.classList.add('o');
-            cell.disabled = true;
-            
             if (data.game_over) {
+                console.log(data);
                 gameActive = false;
                 gameStatus.textContent = data.message;
                 gameStatus.className = `alert ${data.winner === 'O' ? 'alert-danger' : 'alert-success'}`;
+            }
+            console.log('Agent move received:', data);
+            if (data.row !== undefined && data.col !== undefined) {
+                const cell = document.querySelector(`[data-pos="${data.row},${data.col}"]`);
+                if (cell) {
+                    cell.textContent = 'O';
+                    cell.classList.add('o');
+                    cell.disabled = true;
+                } else {
+                    console.error(`Cell at position (${data.row}, ${data.col}) not found`);
+                }
             }
         } catch (error) {
             console.error('Error handling agent move:', error);

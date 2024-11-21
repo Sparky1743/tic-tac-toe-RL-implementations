@@ -16,8 +16,9 @@ sys.path.append(PROJECT_ROOT)
 sys.path.append(os.path.join(PROJECT_ROOT, 'q_learning_and_sarsa'))
 
 from tictactoe.game import Game, getStateKey
-from tictactoe.agent import Qlearner, SARSAlearner
+from tictactoe.agent import Qlearner, SARSAlearner, ValueIterationAgent, PolicyIterationAgent
 from tictactoe.teacher import Teacher
+from play import GameLearning  # Import GameLearning class
 import pickle
 
 # Configure logging
@@ -32,7 +33,7 @@ socketio = SocketIO(app, cors_allowed_origins="*")  # Allow CORS for WebSocket
 def load_agent(agent_type):
     """Load or create a new agent"""
     path = os.path.join(PROJECT_ROOT, 'q_learning_and_sarsa', 
-                       'q_agent.pkl' if agent_type == 'q' else 'sarsa_agent.pkl')
+                       'q_agent.pkl' if agent_type == 'q' else 'sarsa_agent.pkl' if agent_type == 's' else 'v_agent.pkl' if agent_type == 'v' else 'p_agent.pkl')
     try:
         if os.path.isfile(path):
             logger.debug(f"Loading agent from {path}")
@@ -42,13 +43,28 @@ def load_agent(agent_type):
         logger.warning(f"Could not load agent: {e}")
     
     logger.debug(f"Creating new {agent_type} agent")
-    return Qlearner(0.5, 0.9, 0.1) if agent_type == 'q' else SARSAlearner(0.5, 0.9, 0.1)
+    if agent_type == 'q':
+        return Qlearner(0.5, 0.9, 0.1)
+    elif agent_type == 's':
+        return SARSAlearner(0.5, 0.9, 0.1)
+    elif agent_type == 'v':
+        agent = ValueIterationAgent(gamma=0.9)
+        agent.compute_value_iteration()
+        return agent
+    elif agent_type == 'p':
+        agent = PolicyIterationAgent(gamma=0.9)
+        agent.compute_policy_iteration()
+        return agent
+    else:
+        raise ValueError("Unknown agent type")
 
 current_game = None
 
 @app.route('/')
 def index():
     try:
+        global current_game
+        current_game = Game(load_agent("q"))
         return render_template('game.html')
     except Exception as e:
         logger.error(f"Error rendering game page: {str(e)}")
@@ -80,6 +96,7 @@ def handle_move(data):
         logger.debug(f"Player move at position ({row}, {col})")
         current_game.board[row][col] = 'X'
         
+        # print(current_game.checkForEnd('X'))
         if current_game.checkForEnd('X') == 1:
             emit('agent_move', {
                 'game_over': True,
@@ -87,7 +104,14 @@ def handle_move(data):
                 'message': 'You win!'
             })
             return
-
+        elif current_game.checkForDraw():
+            emit('agent_move', {
+                'game_over': True,
+                'winner': None,
+                'message': "It's a draw!"
+            })
+            return
+        
         # Get agent move
         state = getStateKey(current_game.board)  # Use the imported function
         action = current_game.agent.get_action(state)
@@ -133,22 +157,29 @@ def handle_training(data):
         episodes = data.get('episodes', 5000)
         load_existing = data.get('load_existing', False)
         
-        agent = load_agent(agent_type) if load_existing else (
-            Qlearner(0.5, 0.9, 0.1) if agent_type == 'q' else SARSAlearner(0.5, 0.9, 0.1)
+        # Prepare arguments for GameLearning
+        class Args:
+            def __init__(self, agent_type, path, load, teacher_episodes):
+                self.agent_type = agent_type
+                self.path = path
+                self.load = load
+                self.teacher_episodes = teacher_episodes
+        
+        args = Args(
+            agent_type=agent_type,
+            path=os.path.join(PROJECT_ROOT, 'q_learning_and_sarsa', f'{"sarsa" if agent_type=="s" else agent_type }_agent.pkl'),
+            load=load_existing,
+            teacher_episodes=episodes if method == 'teacher' else None
         )
         
-        if method == 'teacher':
-            teacher = Teacher()
-            for i in range(episodes):
-                game = Game(agent, teacher=teacher)
-                game.start()
-                if i % 100 == 0:
-                    emit('training_progress', {
-                        'progress': (i / episodes) * 100,
-                        'message': f'Completed {i} episodes'
-                    })
+        # Initialize GameLearning
+        game_learning = GameLearning(args)
         
-        agent.save(f'{agent_type}_agent.pkl')
+        if method == 'teacher':
+            game_learning.beginTeaching(episodes)
+        else:
+            game_learning.beginPlaying()
+        
         emit('training_complete')
         
     except Exception as e:
