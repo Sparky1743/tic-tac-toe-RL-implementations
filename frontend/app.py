@@ -177,8 +177,8 @@ def handle_training(data):
         
         if method == 'teacher' and (agent_type == 'q' or agent_type == 's'):
             game_learning.beginTeaching(episodes)
-        # else:
-        #     game_learning.beginPlaying()
+        else:
+            game_learning.beginSelfPlay(episodes)
         
         emit('training_complete')
         

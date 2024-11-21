@@ -71,12 +71,21 @@ class GameLearning(object):
     def beginTeaching(self, episodes):
         teacher = Teacher()
         while self.games_played < episodes:
-            game = Game(self.agent, teacher=teacher)
+            game = Game(self.agent, player=teacher, player_type='teacher')
             game.start()
             self.games_played += 1
             if self.games_played % 1000 == 0:
                 print(f"Games played: {self.games_played}")
-        print(self.path)
+        
+        self.agent.save(self.path)
+
+    def beginSelfPlay(self, episodes):
+        while self.games_played < episodes:
+            game = Game(self.agent, self.agent, player_type='agent')
+            game.start()
+            self.games_played += 1
+            if self.games_played % 1000 == 0:
+                print(f"Games played: {self.games_played}")
         self.agent.save(self.path)
 
 

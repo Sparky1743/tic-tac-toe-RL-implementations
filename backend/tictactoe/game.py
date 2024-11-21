@@ -3,16 +3,15 @@ import random
 
 class Game:
     """ The game class. New instance created for each new game. """
-    def __init__(self, agent, teacher=None):
+    def __init__(self, agent, player=None, player_type=None):
         self.agent = agent
-        self.teacher = teacher
+        self.player = player
+        self.player_type = player_type
         self.board = [['-', '-', '-'], ['-', '-', '-'], ['-', '-', '-']]
 
     def playerMove(self):
-        if self.teacher is not None:
-            action = self.teacher.makeMove(self.board)
-            self.board[action[0]][action[1]] = 'X'
-        else:
+        
+        if self.player is None:
             printBoard(self.board)
             while True:
                 move = input("Your move! Please select a row and column from 0-2 "
@@ -28,6 +27,15 @@ class Game:
                     continue
                 self.board[row][col] = 'X'
                 break
+
+        elif self.player_type == "teacher":
+            action = self.player.makeMove(self.board)
+            self.board[action[0]][action[1]] = 'X'
+        else: # self.player_type == "agent"
+            state = getStateKey(self.board)
+            action = self.player.get_action(state)
+            self.board[action[0]][action[1]] = 'X'
+
 
     def agentMove(self, action):
         self.board[action[0]][action[1]] = 'O'
@@ -54,7 +62,7 @@ class Game:
 
     def checkForEnd(self, key):
         if self.checkForWin(key):
-            if self.teacher is None:
+            if self.agent is None:
                 printBoard(self.board)
                 if key == 'X':
                     print("Player wins!")
@@ -62,7 +70,7 @@ class Game:
                     print("RL agent wins!")
             return 1
         elif self.checkForDraw():
-            if self.teacher is None:
+            if self.agent is None:
                 printBoard(self.board)
                 print("It's a draw!")
             return 0
@@ -96,7 +104,7 @@ class Game:
         self.agent.update(prev_state, None, prev_action, None, reward)
 
     def start(self):
-        if self.teacher is not None:
+        if self.agent is not None:
             if random.random() < 0.5:
                 self.playGame(player_first=False)
             else:
