@@ -100,6 +100,8 @@ if __name__ == "__main__":
                         help="whether to load trained agent")
     parser.add_argument("-t", "--teacher_episodes", default=None, type=int,
                         help="employ teacher agent who knows the optimal strategy")
+    parser.add_argument("--self-play", default=None, type=int,
+                        help="number of episodes for self-play training")
 
     args = parser.parse_args()
 
@@ -110,5 +112,7 @@ if __name__ == "__main__":
 
     if args.teacher_episodes is not None:
         gl.beginTeaching(args.teacher_episodes)
+    elif args.self_play is not None:
+        gl.beginSelfPlay(args.self_play)
     else:
         gl.beginPlaying()

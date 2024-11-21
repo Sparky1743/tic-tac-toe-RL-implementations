@@ -1,4 +1,3 @@
-
 # Tic-Tac-Toe Reinforcement Learning Project
 
 This project implements various reinforcement learning agents to play the game of Tic-Tac-Toe. The agents use algorithms such as Q-Learning, SARSA, Value Iteration, and Policy Iteration to learn optimal strategies through self-play and interaction with human players. A web interface is provided for easy interaction with the agents, allowing users to play against them, train them, and visualize their learning progress.
@@ -18,6 +17,7 @@ This project implements various reinforcement learning agents to play the game o
 - [Using Terminal](#using-terminal)
     - [Manual Training](#manual-training)
     - [Training with a Teacher](#training-with-a-teacher)
+    - [Self-Play Training](#self-play-training)
     - [Loading and Continuing Training](#loading-and-continuing-training)
     - [Playing](#playing)
     - [Plotting Rewards](#plotting-rewards)
@@ -30,6 +30,7 @@ This project implements various reinforcement learning agents to play the game o
 - **Visualize Rewards**: View the cumulative rewards of the agents to understand their learning progress.
 - **Multiple Algorithms**: Supports Q-Learning, SARSA, Value Iteration, and Policy Iteration agents.
 - **Interactive Web Interface**: User-friendly web interface built with Flask and Socket.IO.
+- **Self-Play Training**: Agents can train by playing against themselves, accelerating the learning process.
 
 ## Getting Started
 
@@ -42,20 +43,20 @@ This project implements various reinforcement learning agents to play the game o
 
 1. **Clone the Repository**
 
-     ```sh
-     git clone https://github.com/Sparky1743/tic-tac-toe-RL-implementations
-     cd tic-tac-toe-RL-implementations
-     ```
+    ```sh
+    git clone https://github.com/Sparky1743/tic-tac-toe-RL-implementations
+    cd tic-tac-toe-RL-implementations
+    ```
 
 2. **Install Required Packages**
 
-     Install the necessary Python packages using `pip`:
+    Install the necessary Python packages using `pip`:
 
-     ```sh
-     pip install -r requirements.txt
-     ```
+    ```sh
+    pip install -r requirements.txt
+    ```
 
-     Ensure that the `requirements.txt` file includes all necessary dependencies, such as `Flask`, `Flask-SocketIO`, `NumPy`, `Matplotlib`, etc.
+    Ensure that the `requirements.txt` file includes all necessary dependencies, such as `Flask`, `Flask-SocketIO`, `NumPy`, `Matplotlib`, etc.
 
 ## Using the Web Interface
 
@@ -63,86 +64,86 @@ To interact with the agents using the web interface, follow these steps:
 
 1. **Run the Flask Application**
 
-     Navigate to the `frontend` directory and start the Flask app:
+    Navigate to the `frontend` directory and start the Flask app:
 
-     ```sh
-     cd frontend
-     python app.py
-     ```
+    ```sh
+    cd frontend
+    python app.py
+    ```
 
-     The server will start running at `http://localhost:5000`.
+    The server will start running at `http://localhost:5000`.
 
 2. **Access the Web Interface**
 
-     Open your web browser and go to `http://localhost:5000` to access the main page.
+    Open your web browser and go to `http://localhost:5000` to access the main page.
 
 ### Play Against the AI Agents
 
 1. **Navigate to the Play Page**
 
-     From the homepage or navigation bar, select the **Play** option.
+    From the homepage or navigation bar, select the **Play** option.
 
 2. **Select an Agent**
 
-     Use the dropdown menu to select the type of agent you want to play against:
+    Use the dropdown menu to select the type of agent you want to play against:
 
-     - **Q-Learning Agent**
-     - **SARSA Agent**
-     - **Value Iteration Agent**
-     - **Policy Iteration Agent**
+    - **Q-Learning Agent**
+    - **SARSA Agent**
+    - **Value Iteration Agent**
+    - **Policy Iteration Agent**
 
 3. **Start Playing**
 
-     Click on the cells to make your move. You are 'X', and the AI agent is 'O'. The game status will be displayed above the board.
+    Click on the cells to make your move. You are 'X', and the AI agent is 'O'. The game status will be displayed above the board.
 
 4. **Start a New Game**
 
-     Click the **New Game** button to reset the board and play again.
+    Click the **New Game** button to reset the board and play again.
 
 ### Train the Agents
 
 1. **Navigate to the Train Page**
 
-     Click on the **Train** option in the navigation bar.
+    Click on the **Train** option in the navigation bar.
 
 2. **Select Agent Type**
 
-     Choose the agent you want to train:
+    Choose the agent you want to train:
 
-     - **Q-Learning**
-     - **SARSA**
-     - **Value Iteration**
-     - **Policy Iteration**
+    - **Q-Learning**
+    - **SARSA**
+    - **Value Iteration**
+    - **Policy Iteration**
 
 3. **Configure Training Parameters**
 
-     For **Q-Learning** and **SARSA** agents:
+    For **Q-Learning** and **SARSA** agents:
 
-     - **Training Method**: Currently supports **Teacher Training**.
-     - **Training Episodes**: Enter the number of episodes for training (e.g., 5000).
-     - **Load Existing Agent**: Check this box to continue training an existing agent.
+    - **Training Method**: Choose between **Teacher Training** and **Self-Play Training**.
+    - **Training Episodes**: Enter the number of episodes for training (e.g., 5000).
+    - **Load Existing Agent**: Check this box to continue training an existing agent.
 
-     For **Value Iteration** and **Policy Iteration** agents:
+    For **Value Iteration** and **Policy Iteration** agents:
 
-     - No additional parameters are needed as these are model-based methods.
+    - No additional parameters are needed as these are model-based methods.
 
 4. **Start Training**
 
-     Click the **Start Training** button. Training progress will be displayed, and a status message will inform you when training is complete.
+    Click the **Start Training** button. Training progress will be displayed, and a status message will inform you when training is complete.
 
 ### View Agent Rewards
 
 1. **Navigate to the Rewards Page**
 
-     Select the **Rewards** option from the navigation bar.
+    Select the **Rewards** option from the navigation bar.
 
 2. **Select an Agent**
 
-     Choose the agent whose rewards you want to view from the dropdown menu.
+    Choose the agent whose rewards you want to view from the dropdown menu.
 
 3. **View Rewards Plot**
 
-     A plot of the cumulative rewards versus episodes will be displayed, showing the agent's learning progress.
+    A plot of the cumulative rewards versus episodes will be displayed, showing the agent's learning progress.
 
 ## Project Structure
 
@@ -223,8 +224,6 @@ When training an agent manually, you can specify a path to save the agent's stat
         python backend/play.py -a s -p my_agent_path.pkl
         ```
 
-
-
 ### Training with a Teacher
 
 You can also train an agent automatically using a teacher agent. This is done by specifying the `-t` option followed by the number of training episodes:
@@ -240,6 +239,22 @@ You can also train an agent automatically using a teacher agent. This is done by
         ```
 
 This will train the agent automatically and save its progress to the specified pickle file.
+
+### Self-Play Training
+
+Agents can also be trained through self-play, where they play against themselves to improve their strategies. This is done by specifying the `--self-play` option followed by the number of training episodes:
+
+- **Q-Learning**:
+        ```sh
+        python backend/play.py -a q --self-play 5000
+        ```
+
+- **SARSA**:
+        ```sh
+        python backend/play.py -a s --self-play 5000
+        ```
+
+This method allows agents to learn by playing against themselves, accelerating the learning process.
 
 ### Loading and Continuing Training
 
@@ -268,7 +283,6 @@ You can also continue training with a teacher:
         ```
 
 The agent will continue learning and its state will be saved, overwriting the previous pickle file.
-
 
 ### Plotting Rewards
 
