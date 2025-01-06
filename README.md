@@ -1,8 +1,40 @@
-# Tic-Tac-Toe Reinforcement Learning Project
+<div align="center">
+  <h1 align="center">
+    Tic-Tac-Toe Reinforcement Learning Project
+    <br />
+    <br />
+    <a href="https://tic-tac-toe-rl-implementations.glitch.me/">
+      <img src="https://github.com/user-attachments/assets/40d87cf6-0e19-4aea-807c-27fbc0fce932" alt="Home">
+    </a>
+  </h1>
+</div>
+
+<p align="center">
+  <a href="https://github.com/Sparky1743/tic-tac-toe-RL-implementations/pulls"><img src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg" alt="PRs Welcome"></a>
+  <a href="https://github.com/Sparky1743/tic-tac-toe-RL-implementations/blob/main/LICENSE"><img src="https://img.shields.io/github/license/sourcerer-io/hall-of-fame.svg?colorB=ff0000"></a>
+</p>
+
+<p align="center">
+<a href="https://glitch.com/" style="text-decoration: none;">
+  <img src="https://img.shields.io/badge/Deployed%20with-Glitch-blue">
+</a>
+</p>
+
+# Introduction
 
 This project implements various reinforcement learning agents to play the game of Tic-Tac-Toe. The agents use algorithms such as Q-Learning, SARSA, Value Iteration, and Policy Iteration to learn optimal strategies through self-play and interaction with human players. A web interface is provided for easy interaction with the agents, allowing users to play against them, train them, and visualize their learning progress.
 
+## Web Demo
+
+We have deployed the app using Glitch, and it can be accessed at:  
+[https://tic-tac-toe-rl-implementations.glitch.me/](https://tic-tac-toe-rl-implementations.glitch.me/)
+
+Please note that sometimes when interacting with the visual plots of rewards, the app might respond with a slight delay due to limited CPU and RAM resources. If this happens, kindly wait for about 10 to 20 seconds for the app to respond.
+
+If you experience any other issues, feel free to refresh the page, and the app should function correctly. Thank you for your patience!
+
 ## Table of Contents
+Short on time? Check out our [5-minute demo ⏱️](https://www.youtube.com/watch?v=yHNbejRuC3I&list=PL-bQm3uKBL7LIMZvyqHQr1lpTtgELkwYC&index=1)!
 
 - [Features](#features)
 - [Getting Started](#getting-started)
