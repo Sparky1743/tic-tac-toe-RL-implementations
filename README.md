@@ -21,7 +21,7 @@ This project implements various reinforcement learning agents to play the game o
     - [Loading and Continuing Training](#loading-and-continuing-training)
     - [Playing](#playing)
     - [Plotting Rewards](#plotting-rewards)
-- [License](#license)
+- [License](https://github.com/Sparky1743/tic-tac-toe-RL-implementations/blob/main/LICENSE)
 
 ## Features
 
@@ -122,7 +122,8 @@ To interact with the agents using the web interface, follow these steps:
     - **Training Method**: Choose between **Teacher Training** and **Self-Play Training**.
     - **Training Episodes**: Enter the number of episodes for training (e.g., 5000).
     - **Load Existing Agent**: Check this box to continue training an existing agent.
-
+    - **Important**: If the checkbox is **not selected**, the existing agent will be overwritten, and the new agent will be trained **from scratch** with **no knowledge** of the previous agent's training.
+    
     For **Value Iteration** and **Policy Iteration** agents:
 
     - No additional parameters are needed as these are model-based methods.
