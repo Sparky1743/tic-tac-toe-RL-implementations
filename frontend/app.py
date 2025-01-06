@@ -1,5 +1,5 @@
 # frontend/app.py
-from flask import Flask, render_template, jsonify, request
+from flask import Flask, Response, render_template, jsonify, request
 from flask_socketio import SocketIO, emit
 import json
 import sys
@@ -194,6 +194,7 @@ def get_rewards(agent_type):
         if not agent.rewards:
             return jsonify({'error': 'No rewards data available'})
         
+        # Plot in memory
         plt.figure(figsize=(10, 6))
         plt.plot(np.cumsum(agent.rewards))
         plt.title('Agent Cumulative Reward vs. Episode')
@@ -206,9 +207,9 @@ def get_rewards(agent_type):
         buf.seek(0)
         plt.close()
         
-        return jsonify({
-            'plot': base64.b64encode(buf.getvalue()).decode('utf-8')
-        })
+        # Return image directly as response
+        return Response(buf.getvalue(), mimetype='image/png')
+    
     except Exception as e:
         logger.error(f"Error getting rewards: {str(e)}")
         return jsonify({'error': str(e)}), 500
