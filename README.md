@@ -29,9 +29,11 @@ This project implements various reinforcement learning agents to play the game o
 We have deployed the app using Glitch, and it can be accessed at:  
 [https://tic-tac-toe-rl-implementations.glitch.me/](https://tic-tac-toe-rl-implementations.glitch.me/)
 
-Please note that sometimes when interacting with the visual plots of rewards, the app might respond with a slight delay due to limited CPU and RAM resources. If this happens, kindly wait for about 10 to 20 seconds for the app to respond.
+All agents in the **web demo** are **already well-trained**, so there’s **no need to train them again**. However, if you wish to train a **new agent from scratch**, make sure to **uncheck the "Load Existing Agent"** button and **keep the number of iterations small (e.g., 5000)** to avoid long delays.
 
-If you experience any other issues, feel free to refresh the page, and the app should function correctly. Thank you for your patience!
+Please note that sometimes when interacting with the **visual plots of rewards**, the app might respond with a slight delay due to limited **CPU and RAM resources**. If this happens, kindly **wait for about 10 to 20 seconds** for the app to respond.
+
+If you experience any other issues, feel free to **refresh the page**, and the app should function correctly. Thank you for your patience!
 
 ## Table of Contents
 Short on time? Check out our [5-minute demo ⏱️](https://www.youtube.com/watch?v=yHNbejRuC3I&list=PL-bQm3uKBL7LIMZvyqHQr1lpTtgELkwYC&index=1)!
