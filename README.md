@@ -3,7 +3,7 @@
     Tic-Tac-Toe Reinforcement Learning Project
     <br />
     <br />
-    <a href="https://tic-tac-toe-rl-implementations.glitch.me/">
+    <a href="https://rebrand.ly/ttt-rl-game/">
       <img src="https://github.com/user-attachments/assets/40d87cf6-0e19-4aea-807c-27fbc0fce932" alt="Home">
     </a>
   </h1>
@@ -27,7 +27,7 @@ This project implements various reinforcement learning agents to play the game o
 ## Web Demo
 
 We have deployed the app using Glitch, and it can be accessed at:  
-[https://tic-tac-toe-rl-implementations.glitch.me/](https://tic-tac-toe-rl-implementations.glitch.me/)
+[https://rebrand.ly/ttt-rl-game/](https://rebrand.ly/ttt-rl-game/)
 
 All agents in the **web demo** are **already well-trained**, so there’s **no need to train them again**. However, if you wish to train a **new agent from scratch**, make sure to **uncheck the "Load Existing Agent"** button and **keep the number of iterations small (e.g., 5000)** to avoid long delays.
 
