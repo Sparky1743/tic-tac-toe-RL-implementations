@@ -26,7 +26,7 @@ This project implements various reinforcement learning agents to play the game o
 
 ## Web Demo
 
-We have deployed the app using Glitch, and it can be accessed at:  
+We have deployed the app using Ploomber, and it can be accessed at:
 [https://rebrand.ly/ttt-rl-game/](https://rebrand.ly/ttt-rl-game/)
 
 All agents in the **web demo** are **already well-trained**, so there’s **no need to train them again**. However, if you wish to train a **new agent from scratch**, make sure to **uncheck the "Load Existing Agent"** button and **keep the number of iterations small (e.g., 5000)** to avoid long delays.
